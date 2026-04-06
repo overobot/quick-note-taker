@@ -1,1 +1,2 @@
-
+[20643:0406/223227.681461:ERROR:dbus/object_proxy.cc:573] Failed to call method: org.freedesktop.systemd1.Manager.StartTransientUnit: object_path= /org/freedesktop/systemd1: org.freedesktop.systemd1.UnitExists: Unit app-org.chromium.Chromium-20643.scope was already loaded or has a fragment file.
+[20643:0406/230605.119731:ERROR:content/browser/browser_main_loop.cc:290] GLib-GObject: ../../../gobject/gsignal.c:2685: instance '0x25fc001e1ed0' has no handler with id '2379'
