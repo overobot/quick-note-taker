@@ -1,2 +1,2 @@
-[14088:0408/224814.140859:ERROR:dbus/object_proxy.cc:573] Failed to call method: org.freedesktop.systemd1.Manager.StartTransientUnit: object_path= /org/freedesktop/systemd1: org.freedesktop.systemd1.UnitExists: Unit app-org.chromium.Chromium-14088.scope was already loaded or has a fragment file.
-/home/overobot/Desktop/Software-Engineering-4/quick-note-taker/node_modules/electron/dist/electron exited with signal SIGINT
+
+C:\Users\user-0\Desktop\electron-app\quick-note-taker\node_modules\electron\dist\electron.exe exited with signal SIGINT

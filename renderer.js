@@ -2,6 +2,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     const textarea = document.getElementById('note');
     const saveBtn = document.getElementById('save');
     const statusEl = document.getElementById('save_status');
+    const newNoteBtn = document.getElementById('new-note');
 
     const savedNote = await window.electronAPI.loadNote();
     textarea.value = savedNote;
@@ -32,6 +33,25 @@ window.addEventListener('DOMContentLoaded', async () => {
             statusEl.textContent = 'Save As cancelled';
         }
     });
+
+        // NEW: New Note button
+        newNoteBtn.addEventListener('click', async () => {
+            if (textarea.value === lastSavedText) {
+                textarea.value = '';
+                lastSavedText = '';
+                statusEl.textContent = 'New note started';
+                return;
+            }
+            // If there are unsave changes, ask the user first
+            const result = await window.electronAPI.newNote();
+            if (result.confirmed) {
+                textarea.value = '';
+                lastSavedText = '';
+                statusEl.textContent = 'New note started';
+            } else {
+                statusEl.textContent = 'New note cancelled.';
+            }
+        });
 
     async function autoSave() {
         const currentText = textarea.value;

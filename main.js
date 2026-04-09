@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog} = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 
 app.disableHardwareAcceleration();
 
@@ -50,13 +50,26 @@ ipcMain.handle('load-note', async () => {
 ipcMain.handle('save-as', async (event, text) => {
     const result = await dialog.showSaveDialog({
         defaultPath: 'mynote.txt',
-        filters: [{name: 'Text Files', extensions: ['txt']}]
+        filters: [{ name: 'Text Files', extensions: ['txt'] }]
     });
 
-    if(result.canceled) {
-        return {success: false};
+    if (result.canceled) {
+        return { success: false };
     }
 
     fs.writeFileSync(result.filePath, text, 'utf-8');
-    return {success: true, filePath: result.filePath};
+    return { success: true, filePath: result.filePath };
+});
+
+// NEW: Open File handler
+ipcMain.handle('new-note', async (event) => {
+    const result = await dialog.showMessageBox({
+        type: 'warning',
+        buttons: ['Discard Changes', 'Cancel'],
+        defaultId: 1,
+        title: 'Unsaved Changes',
+        message: 'You have unsaved changes. Start a new note anyway?'
+    });
+    // result.response === 0 means user clicked 'Discard Changes'
+    return { confirmed: result.response === 0 };
 });
