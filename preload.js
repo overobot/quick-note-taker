@@ -5,5 +5,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     loadNote: () => ipcRenderer.invoke('load-note'),
     saveAs: (text) => ipcRenderer.invoke('save-as', text), // NEW: Expose Save As function
     newNote: () => ipcRenderer.invoke('new-note'), // NEW: Expose New Note function
-    openFile: () => ipcRenderer.invoke('open-file') // NEW: Expose Open File function
+    openFile: () => ipcRenderer.invoke('open-file'), // NEW: Expose Open File function
+    smartSave: (text, filePath) => ipcRenderer.invoke('smart-save', text, filePath) // UPDATED: Expose Smart Save function
 });

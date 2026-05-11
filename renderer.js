@@ -6,17 +6,19 @@ window.addEventListener('DOMContentLoaded', async () => {
     const savedNote = await window.electronAPI.loadNote();
     textarea.value = savedNote;
     let lastSavedText = textarea.value;
+    let currentFilePath = null; // Track current file path for Save As functionality
 
-    // Manual save
+    // Manual save (updated to use smartSave)
     saveBtn.addEventListener('click', async () => {
         try {
-            await window.electronAPI.saveNote(textarea.value);
+            const result = await window.electronAPI.smartSave(textarea.value, currentFilePath);
             lastSavedText = textarea.value;
-            statusEl.textContent = 'Manually saved!';
+            currentFilePath = result.filePath; // Update current file path after save
+            statusEl.textContent = `Saved to: ${result.filePath}`;
             alert('Note saved successfully!');
         } catch (err) {
-            console.error('Manual save failed:', err);
-            statusEl.textContent = 'Manual save failed';
+            console.error('Save failed:', err);
+            statusEl.textContent = 'Save failed';
         }
     });
 
@@ -51,7 +53,8 @@ window.addEventListener('DOMContentLoaded', async () => {
         const result = await window.electronAPI.saveAs(textarea.value);
         if (result.success) {
             lastSavedText = textarea.value;
-            statusEl.textContent = `Saved to: ${result.filePath}`;
+            currentFilePath = result.filePath;
+            statusEl.textContent = `Saved to: ${result.filePath}`;            
         } else {
             statusEl.textContent = 'Save As cancelled.';
         }

@@ -92,3 +92,10 @@ ipcMain.handle('open-file', async (event) => {
     const content = fs.readFileSync(filePath, 'utf-8');
     return { success: true, content, filePath };
 });
+
+// UPDATED: Smart Save handler
+ipcMain.handle('smart-save', async (event, text, filePath) => {
+    const targetPath = filePath || path.join(app.getPath('documents'), 'quicknote.txt');
+    fs.writeFileSync(targetPath, text, 'utf-8');
+    return { success: true, filePath: targetPath };
+});
