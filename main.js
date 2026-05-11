@@ -2,10 +2,11 @@ const { app, BrowserWindow, ipcMain, dialog, Menu, Tray } = require('electron');
 
 app.disableHardwareAcceleration();
 
-// This comment is to test the git
-
 const path = require('node:path');
 const fs = require('node:fs');
+
+// NEW: Path for the notes JSON file
+const notesFilePath = path.join(app.getPath('documents'), 'notes.json');
 
 function createWindow() {
     const win = new BrowserWindow({
@@ -115,6 +116,20 @@ app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit();
 });
 
+// NEW: Helper — read all notes from the JSON file
+function readNotes() {
+    if (!fs.existsSync(notesFilePath)) {
+        return [];    // return empty array if file does not exist yet
+    }
+    const raw = fs.readFileSync(notesFilePath, 'utf-8');
+    return JSON.parse(raw);
+}
+
+// NEW: Helper — write all notes to the JSON file
+function writeNotes(notes) {
+    fs.writeFileSync(notesFilePath, JSON.stringify(notes, null, 2), 'utf-8');
+}
+
 // IPC Handlers
 ipcMain.handle('save-note', async (event, text) => {
     const filePath = path.join(app.getPath('documents'), 'quicknote.txt');
@@ -180,6 +195,37 @@ ipcMain.handle('smart-save', async (event, text, filePath) => {
     const targetPath = filePath || path.join(app.getPath('documents'), 'quicknote.txt');
     fs.writeFileSync(targetPath, text, 'utf-8');
     return { success: true, filePath: targetPath };
+});
+
+// NEW: Get all notes
+ipcMain.handle('get-notes', async () => {
+    return readNotes();
+});
+
+// NEW: Save a note (create or update)
+ipcMain.handle('save-note-json', async (event, note) => {
+    const notes = readNotes();
+    const index = notes.findIndex(n => n.id === note.id);
+    const now = new Date().toISOString();
+
+    if (index === -1) {
+        // Note does not exist yet — create it
+        notes.push({ ...note, createdAt: now, updatedAt: now });
+    } else {
+        // Note already exists — update it
+        notes[index] = { ...notes[index], ...note, updatedAt: now };
+    }
+
+    writeNotes(notes);
+    return { success: true };
+});
+
+// NEW: Delete a note
+ipcMain.handle('delete-note', async (event, id) => {
+    const notes = readNotes();
+    const filtered = notes.filter(n => n.id !== id);
+    writeNotes(filtered);
+    return { success: true };
 });
 
 

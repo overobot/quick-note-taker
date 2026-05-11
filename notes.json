@@ -1,0 +1,16 @@
+[
+    {
+        "id": "1701234567890",
+        "title": "Shopping List",
+        "content": "Milk, eggs, bread",
+        "createdAt": "2024-11-29T10:30:00.000Z",
+        "updatedAt": "2024-11-29T11:00:00.000Z"
+    },
+    {
+        "id": "1701234599999",
+        "title": "Meeting Notes",
+        "content": "Discuss project timeline",
+        "createdAt": "2024-11-29T14:00:00.000Z",
+        "updatedAt": "2024-11-29T14:45:00.000Z"
+    }
+]
