@@ -54,7 +54,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         if (result.success) {
             lastSavedText = textarea.value;
             currentFilePath = result.filePath;
-            statusEl.textContent = `Saved to: ${result.filePath}`;            
+            statusEl.textContent = `Saved to: ${result.filePath}`;
         } else {
             statusEl.textContent = 'Save As cancelled.';
         }
@@ -98,4 +98,20 @@ window.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
+    // NEW: Menu action listeners
+    window.electronAPI.onMenuAction('menu-new-note', () => {
+        newNoteBtn.click();    // reuse the existing button logic
+    });
+
+    window.electronAPI.onMenuAction('menu-open-file', () => {
+        openFileBtn.click();   // reuse the existing button logic
+    });
+
+    window.electronAPI.onMenuAction('menu-save', () => {
+        saveBtn.click();       // reuse the existing button logic
+    });
+
+    window.electronAPI.onMenuAction('menu-save-as', () => {
+        saveAsBtn.click();     // reuse the existing button logic
+    });
 });

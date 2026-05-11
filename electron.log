@@ -1,8 +1,0 @@
-2026-05-12 01:28:43.057 Electron[41473:302320] representedObject is not a WeakPtrToElectronMenuModelAsNSObject
-2026-05-12 01:28:43.541 Electron[41473:302320] representedObject is not a WeakPtrToElectronMenuModelAsNSObject
-2026-05-12 01:28:43.542 Electron[41473:302320] representedObject is not a WeakPtrToElectronMenuModelAsNSObject
-2026-05-12 01:29:00.551 Electron[41473:302320] representedObject is not a WeakPtrToElectronMenuModelAsNSObject
-2026-05-12 01:29:00.553 Electron[41473:302320] representedObject is not a WeakPtrToElectronMenuModelAsNSObject
-2026-05-12 01:29:01.445 Electron[41473:302320] representedObject is not a WeakPtrToElectronMenuModelAsNSObject
-2026-05-12 01:29:01.446 Electron[41473:302320] representedObject is not a WeakPtrToElectronMenuModelAsNSObject
-/Users/overobot/Library/CloudStorage/OneDrive-Personal/Lectures/[1] Global IT Engineering/[1] Undergraduate/Software Engineering/electron-app/quick-note-taker/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron exited with signal SIGINT
