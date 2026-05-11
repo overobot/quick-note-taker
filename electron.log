@@ -1,1 +1,1 @@
-[46666:0406/233626.999758:ERROR:dbus/object_proxy.cc:573] Failed to call method: org.freedesktop.systemd1.Manager.StartTransientUnit: object_path= /org/freedesktop/systemd1: org.freedesktop.systemd1.UnitExists: Unit app-org.chromium.Chromium-46666.scope was already loaded or has a fragment file.
+/Users/overobot/Library/CloudStorage/OneDrive-Personal/Lectures/[1] Global IT Engineering/[1] Undergraduate/Software Engineering/electron-app/quick-note-taker/node_modules/electron/dist/Electron.app/Contents/MacOS/Electron exited with signal SIGINT
