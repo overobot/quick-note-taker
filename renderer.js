@@ -80,4 +80,19 @@ window.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
+    // NEW: Open File button
+    const openFileBtn = document.getElementById('open-file');
+
+    openFileBtn.addEventListener('click', async () => {
+        const result = await window.electronAPI.openFile();
+        if (result.success) {
+            textarea.value = result.content;
+            lastSavedText = result.content;
+            currentFilePath = result.filePath;
+            statusEl.textContent = `Opened: ${result.filePath}`;
+        } else {
+            statusEl.textContent = 'Open cancelled.';
+        }
+    });
+
 });

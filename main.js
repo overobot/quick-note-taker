@@ -76,3 +76,19 @@ ipcMain.handle('new-note', async (event) => {
     // result.response === 0 means user clicked 'Discard Changes'
     return { confirmed: result.response === 0 };
 });
+
+// NEW: Open File handler
+ipcMain.handle('open-file', async (event) => {
+    const result = await dialog.showOpenDialog({
+        properties: ['openFile'],
+        filters: [{ name: 'Text Files', extensions: ['txt'] }]
+    });
+
+    if (result.canceled) {
+        return { success: false };
+    }
+
+    const filePath = result.filePaths[0];
+    const content = fs.readFileSync(filePath, 'utf-8');
+    return { success: true, content, filePath };
+});
