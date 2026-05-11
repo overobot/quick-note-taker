@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog, Menu } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog, Menu, Tray } = require('electron');
 
 app.disableHardwareAcceleration();
 
@@ -19,6 +19,12 @@ function createWindow() {
     });
 
     win.loadFile('index.html');
+
+    // NEW: Hide window instead of closing
+    win.on('close', (event) => {
+        event.preventDefault();   // stop the window from actually closing
+        win.hide();               // hide it instead
+    });
 }
 
 app.whenReady().then(() => {
@@ -69,6 +75,36 @@ app.whenReady().then(() => {
 
     const menu = Menu.buildFromTemplate(menuTemplate);
     Menu.setApplicationMenu(menu);
+
+    // Create tray icon
+    tray = new Tray(path.join(__dirname, 'icon.png'));
+
+    // Tray context menu
+    const trayMenu = Menu.buildFromTemplate([
+        {
+            label: 'Show App',
+            click: () => {
+                BrowserWindow.getAllWindows()[0].show();
+            }
+        },
+        {
+            label: 'Quit',
+            click: () => app.quit()
+        }
+    ]);
+
+    tray.setToolTip('Quick Note Taker');
+    tray.setContextMenu(trayMenu);
+
+    // NEW: Double-click tray icon to show window
+    tray.on('double-click', () => {
+        const win = BrowserWindow.getAllWindows()[0];
+        if (win.isVisible()) {
+            win.hide();
+        } else {
+            win.show();
+        }
+    });
 
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow();
@@ -145,3 +181,5 @@ ipcMain.handle('smart-save', async (event, text, filePath) => {
     fs.writeFileSync(targetPath, text, 'utf-8');
     return { success: true, filePath: targetPath };
 });
+
+
